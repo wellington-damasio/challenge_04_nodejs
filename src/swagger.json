@@ -1,0 +1,268 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Users API - Ignite Challenge I - Chap. IV",
+    "description": "A simple CRUD users API",
+    "version": "1.0.0",
+    "contact": {
+      "email": "damasiowellington7@gmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Creates a new user",
+        "description": "Creates a new user in the users array of the UserRepository class",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Arthur",
+                  "email": "arthur@example.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "User already exists"
+          }
+        }
+      },
+      "get": {
+        "tags": ["users"],
+        "summary": "List all users",
+        "description": "List all users available in the users array if have an admin authorization (pass the admin id in the headers",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "header",
+            "type": "string",
+            "description": "Id will be used to check if user is an admin"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "id": "asw241e81s82",
+                    "name": "Arthur",
+                    "admin": false,
+                    "email": "arthur@example.com",
+                    "created_at": "2023-01-06T09:15:57.456Z",
+                    "updated_at": "2023-07-03T15:24:57.456Z"
+                  },
+                  {
+                    "id": "ujs82j3123as",
+                    "name": "Wellington Damasio",
+                    "admin": false,
+                    "email": "damasiowellington89@example.com",
+                    "created_at": "2022-01-06T09:15:57.456Z",
+                    "updated_at": "2023-17-02T15:40:40.456Z"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "User is not an admin"
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Get an user based on Id",
+        "description": "Get an user that exists in the users array based on the Id passed in the URL",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "admin": {
+                    "type": "boolean"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "updated_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              },
+              "examples": {
+                "User found": {
+                  "summary": "User found",
+                  "value": {
+                    "id": "asw241e81s82",
+                    "name": "Arthur",
+                    "admin": false,
+                    "email": "arthur@example.com",
+                    "created_at": "2023-01-06T09:15:57.456Z",
+                    "updated_at": "2023-07-03T15:24:57.456Z"
+                  }
+                },
+                "User not found": {
+                  "summary": "User not found",
+                  "value": {
+                    "error": "User not found"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["users"],
+        "summary": "Give admin status to a user",
+        "description": "Turn admin authorization to true for the user with the Id passed in the URL params",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "admin": {
+                    "type": "boolean"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "updated_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              },
+              "examples": {
+                "User id found": {
+                  "summary": "Found user id",
+                  "value": {
+                    "id": "asw241e81s82",
+                    "name": "Arthur",
+                    "admin": true,
+                    "email": "arthur@example.com",
+                    "created_at": "2023-01-06T09:15:57.456Z",
+                    "updated_at": "2023-07-03T15:24:57.456Z"
+                  }
+                },
+                "User id not found": {
+                  "summary": "Didn't found user id",
+                  "value": {
+                    "error": "User id not found"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  }
+}

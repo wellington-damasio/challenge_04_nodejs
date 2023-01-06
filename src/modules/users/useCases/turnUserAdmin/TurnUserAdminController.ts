@@ -12,7 +12,7 @@ class TurnUserAdminController {
       const newAdmin = this.turnUserAdminUseCase.execute({ user_id });
       return response.status(200).json(newAdmin);
     } catch (error) {
-      return response.status(404).json({ error: "User doesnt exist" });
+      return response.status(404).json({ error: "User doesn't exist" });
     }
   }
 }
